@@ -3605,9 +3605,9 @@ const GameState = {
 
 // State management functions
 const StateManager = {
-  // Get current state (returns a copy to prevent direct mutation)
+  // Get current state (returns reference - be careful with mutation)
   getState() {
-    return JSON.parse(JSON.stringify(GameState));
+    return GameState;
   },
 
   // Update villager stats
