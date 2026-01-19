@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Lighthouse Keeper</title>
+  <meta name="description" content="A narrative game about memory, power, and the violence of record-keeping.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="src/css/themes.css">
+  <link rel="stylesheet" href="src/css/main.css">
+  <link rel="stylesheet" href="src/css/animations.css">
+</head>
+<body>
+  <!-- Skip Link for Accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Background Layers -->
+  <div id="ocean-layer" aria-hidden="true"></div>
+  <div id="lighthouse-beam" aria-hidden="true"></div>
+  <div id="rain-container" aria-hidden="true"></div>
+  <div id="fog-overlay" aria-hidden="true"></div>
+  <div id="tension-vignette" aria-hidden="true"></div>
+
+  <!-- Start Screen -->
+  <div id="start-screen" class="modal-overlay">
+    <div class="start-content">
+      <h1 class="start-title slide-up">The Lighthouse Keeper</h1>
+      <p class="start-subtitle slide-up delay-1">A game about memory, power, and the violence of record-keeping</p>
+      <div class="start-buttons slide-up delay-2">
+        <button id="btn-new-game" class="start-btn primary">New Game</button>
+        <button id="btn-continue" class="start-btn secondary" style="display: none;">Continue</button>
+      </div>
+      <p class="start-quote slide-up delay-3">
+        "The record is never the event.<br>
+        But when the record is all anyone has,<br>
+        the record becomes the truth."
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Game Container -->
+  <div id="game-container" style="display: none;">
+    <!-- Header -->
+    <header id="header">
+      <div class="header-left">
+        <div class="lighthouse-icon" aria-label="Lighthouse lamp"></div>
+        <h1 class="game-title">The Lighthouse Keeper</h1>
+      </div>
+
+      <div class="header-center">
+        <div class="week-display">
+          Week <span id="week-number" class="week-number">1</span> of 5
+        </div>
+
+        <div class="phase-display" data-phase="dawn">
+          <span class="phase-indicator"></span>
+          <span id="phase-label" class="phase-label">Dawn</span>
+        </div>
+
+        <div class="time-display">
+          <span class="time-icon">&#9201;</span>
+          <span id="time-remaining">4</span> hours remaining
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="tension-meter">
+          <span class="tension-label">Tension</span>
+          <div class="tension-bar">
+            <div id="tension-fill" class="tension-fill" style="width: 20%;"></div>
+          </div>
+        </div>
+        <button id="btn-audio" class="icon-btn" aria-label="Toggle audio">
+          <span id="audio-icon">&#128264;</span>
+        </button>
+        <button id="btn-menu" class="icon-btn" aria-label="Menu">&#9776;</button>
+      </div>
+    </header>
+
+    <!-- Villager Panel -->
+    <aside id="villager-panel" aria-label="Village residents">
+      <h2 class="panel-title">The Village</h2>
+      <div id="villager-list" class="villager-list">
+        <!-- Populated by JavaScript -->
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main id="main-content">
+      <div class="event-container">
+        <h2 id="event-title" class="event-title">The Disputed Catch</h2>
+        <div id="event-description" class="event-description">
+          <!-- Event description populated by JavaScript -->
+        </div>
+
+        <section class="investigation-section">
+          <h3 class="section-title">Investigation Options</h3>
+          <div id="action-grid" class="action-grid">
+            <!-- Action cards populated by JavaScript -->
+          </div>
+        </section>
+
+        <div id="testimony-container" class="testimony-container" style="display: none;">
+          <!-- Testimony populated by JavaScript -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Log Panel -->
+    <aside id="log-panel" aria-label="Official log">
+      <div class="log-header">
+        <h2 class="log-title">The Official Record</h2>
+        <div id="log-week" class="log-week">Week 1 Entry</div>
+      </div>
+
+      <div class="entry-slots">
+        <div class="entry-slot" data-slot="tone" data-accepts="tone">
+          <div class="slot-label">Tone</div>
+          <div class="slot-content" id="slot-tone"></div>
+        </div>
+        <div class="entry-slot" data-slot="subject" data-accepts="subject">
+          <div class="slot-label">Subject</div>
+          <div class="slot-content" id="slot-subject"></div>
+        </div>
+        <div class="entry-slot" data-slot="action" data-accepts="action">
+          <div class="slot-label">Action</div>
+          <div class="slot-content" id="slot-action"></div>
+        </div>
+        <div class="entry-slot" data-slot="object" data-accepts="object">
+          <div class="slot-label">Object</div>
+          <div class="slot-content" id="slot-object"></div>
+        </div>
+        <div class="entry-slot" data-slot="context" data-accepts="context">
+          <div class="slot-label">Context</div>
+          <div class="slot-content" id="slot-context"></div>
+        </div>
+      </div>
+
+      <div class="entry-preview-section">
+        <div class="preview-label">Preview</div>
+        <p id="entry-preview" class="entry-preview-text">
+          <em>Compose your entry by dragging fragments into the slots above...</em>
+        </p>
+      </div>
+
+      <div class="submit-section">
+        <button id="btn-submit-entry" class="submit-btn" disabled>
+          Sign & Record Entry
+        </button>
+      </div>
+    </aside>
+
+    <!-- Fragment Tray -->
+    <div id="fragment-tray" aria-label="Available fragments">
+      <div id="fragment-list" class="tray-content">
+        <!-- Fragments populated by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Memory Overlay -->
+  <div id="memory-overlay" aria-hidden="true">
+    <div id="memory-content">
+      <p id="memory-trigger"></p>
+      <p id="memory-text"></p>
+      <button id="memory-dismiss">Continue</button>
+    </div>
+  </div>
+
+  <!-- Week Transition -->
+  <div id="week-transition" aria-hidden="true">
+    <div class="transition-text" id="transition-week"></div>
+    <div class="transition-subtext" id="transition-phase"></div>
+  </div>
+
+  <!-- Consequence Modal -->
+  <div id="consequence-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content consequence-content">
+      <h3 class="modal-title">The Record is Made</h3>
+      <div id="consequence-entry" class="consequence-entry"></div>
+      <div id="consequence-effects" class="consequence-effects"></div>
+      <button id="consequence-continue" class="modal-btn">Continue</button>
+    </div>
+  </div>
+
+  <!-- Screen Dim for Effects -->
+  <div class="screen-dim" id="screen-dim"></div>
+
+  <!-- Scripts -->
+  <script src="src/js/data/villagers.js"></script>
+  <script src="src/js/data/fragments.js"></script>
+  <script src="src/js/data/events.js"></script>
+  <script src="src/js/systems/state.js"></script>
+  <script src="src/js/systems/story.js"></script>
+  <script src="src/js/systems/consequence.js"></script>
+  <script src="src/js/systems/memory.js"></script>
+  <script src="src/js/ui/render.js"></script>
+  <script src="src/js/ui/fragments.js"></script>
+  <script src="src/js/ui/modals.js"></script>
+  <script src="src/js/audio/engine.js"></script>
+  <script src="src/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+/* THE LIGHTHOUSE KEEPER - Theme & Typography System */
+
+/* ===== CSS CUSTOM PROPERTIES ===== */
+:root {
+  /* The Sea (Interface Background) */
+  --sea-deep: #0a1419;
+  --sea-mid: #12202a;
+  --sea-surface: #1a2d3a;
+  --sea-foam: #243d4d;
+
+  /* The Land (Text, Villagers) */
+  --land-dark: #1a1612;
+  --land-wood: #2a2622;
+  --land-sand: #d4c4a8;
+  --land-light: #e8dcc8;
+
+  /* The Light (Accents, Interaction) */
+  --light-glow: #f0c860;
+  --light-dim: #a08030;
+  --light-danger: #c04030;
+  --light-verdant: #40a060;
+  --light-warning: #c09030;
+
+  /* Family Colors */
+  --family-shore: #2d5a3d;
+  --family-church: #8a7a50;
+  --family-newcomer: #5a6a7a;
+  --family-hill: #7a6a50;
+
+  /* Typography */
+  --font-display: 'Libre Baskerville', Georgia, serif;
+  --font-body: 'Libre Baskerville', Georgia, serif;
+  --font-system: 'IBM Plex Mono', 'Courier New', monospace;
+  --font-log: 'Libre Baskerville', Georgia, serif;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+
+  /* Border Radius */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+  --transition-slow: 500ms ease;
+
+  /* Z-Index Scale */
+  --z-base: 0;
+  --z-beam: 1;
+  --z-content: 10;
+  --z-overlay: 50;
+  --z-modal: 100;
+  --z-vignette: 200;
+}
+
+/* ===== TYPOGRAPHY ===== */
+
+/* Headers - Libre Baskerville */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--land-light);
+  line-height: 1.3;
+  margin: 0 0 var(--space-md) 0;
+}
+
+h1 {
+  font-size: 2rem;
+  letter-spacing: 0.05em;
+}
+
+h2 {
+  font-size: 1.5rem;
+  letter-spacing: 0.03em;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Body Text */
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--land-sand);
+}
+
+p {
+  margin: 0 0 var(--space-md) 0;
+}
+
+/* Italic for testimonial/narrative */
+.testimonial,
+.narrative,
+blockquote {
+  font-style: italic;
+  color: var(--land-light);
+}
+
+blockquote {
+  margin: var(--space-lg) 0;
+  padding: var(--space-md) var(--space-lg);
+  border-left: 2px solid var(--light-dim);
+  background: rgba(26, 45, 58, 0.3);
+}
+
+/* System/Interface Text - IBM Plex Mono */
+.system-text,
+.interface-label,
+.stat-value,
+.time-display {
+  font-family: var(--font-system);
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+}
+
+/* Log Entry Text */
+.log-entry,
+.entry-preview {
+  font-family: var(--font-log);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--land-dark);
+}
+
+/* Small/Caption Text */
+.caption,
+.hint,
+small {
+  font-size: 0.8125rem;
+  color: var(--sea-foam);
+}
+
+/* ===== WELLBEING/TRUST COLORS ===== */
+
+.wellbeing-high { color: var(--light-verdant); }
+.wellbeing-medium { color: var(--light-warning); }
+.wellbeing-low { color: var(--light-danger); }
+
+.trust-high { color: var(--light-glow); }
+.trust-medium { color: var(--light-dim); }
+.trust-low { color: var(--light-danger); }
+
+/* ===== FAMILY COLORS ===== */
+
+.family-shore { border-color: var(--family-shore); }
+.family-shore .family-indicator { background: var(--family-shore); }
+
+.family-church { border-color: var(--family-church); }
+.family-church .family-indicator { background: var(--family-church); }
+
+.family-newcomer { border-color: var(--family-newcomer); }
+.family-newcomer .family-indicator { background: var(--family-newcomer); }
+
+.family-hill { border-color: var(--family-hill); }
+.family-hill .family-indicator { background: var(--family-hill); }
+
+/* ===== TENSION STATES ===== */
+
+[data-tension="low"] {
+  --tension-color: var(--sea-foam);
+}
+
+[data-tension="medium"] {
+  --tension-color: var(--light-warning);
+}
+
+[data-tension="high"] {
+  --tension-color: var(--light-danger);
+}
+
+[data-tension="critical"] {
+  --tension-color: #ff3020;
+}
+
+/* ===== PHASE INDICATORS ===== */
+
+[data-phase="dawn"] {
+  --phase-color: #c09070;
+}
+
+[data-phase="day"] {
+  --phase-color: var(--light-glow);
+}
+
+[data-phase="dusk"] {
+  --phase-color: #8060a0;
+}
+
+[data-phase="night"] {
+  --phase-color: #4050a0;
+}
+
+/* ===== ACCESSIBILITY ===== */
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  :root {
+    --land-sand: #ffffff;
+    --land-light: #ffffff;
+    --sea-deep: #000000;
+    --sea-mid: #111111;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* Focus Styles */
+:focus {
+  outline: 2px solid var(--light-glow);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--light-glow);
+  outline-offset: 2px;
+}
+
+/* Skip Link */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--sea-mid);
+  color: var(--land-light);
+  z-index: 9999;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: var(--space-md);
+}
