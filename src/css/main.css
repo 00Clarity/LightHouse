@@ -459,6 +459,40 @@ body {
   margin: var(--space-xs);
 }
 
+/* Testimony fragments - draggable */
+.testimony-fragments-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+.testimony-fragment {
+  background: rgba(240, 200, 96, 0.15);
+  border: 1px dashed rgba(240, 200, 96, 0.4);
+  color: var(--light-glow);
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+.testimony-fragment:hover {
+  background: rgba(240, 200, 96, 0.25);
+  border-color: var(--light-glow);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.testimony-fragment.dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+}
+
+.testimony-fragment.used {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-style: solid;
+}
+
 /* ===== LOG PANEL ===== */
 
 #log-panel {
