@@ -44,6 +44,7 @@ const jsFiles = [
   'src/js/ui/render.js',
   'src/js/ui/fragments.js',
   'src/js/ui/modals.js',
+  'src/js/ui/intro.js',
   'src/js/audio/engine.js',
   'src/js/main.js'
 ];
@@ -90,6 +91,29 @@ ${combinedCSS}
   <div id="rain-container" aria-hidden="true"></div>
   <div id="fog-overlay" aria-hidden="true"></div>
   <div id="tension-vignette" aria-hidden="true"></div>
+
+  <!-- Intro Sequence -->
+  <div id="intro-sequence" aria-hidden="true">
+    <div class="intro-beam"></div>
+    <div class="intro-lighthouse">
+      <div class="lighthouse-light"></div>
+      <div class="lighthouse-lamp"></div>
+      <div class="lighthouse-tower"></div>
+      <div class="lighthouse-base"></div>
+    </div>
+    <div class="intro-waves">
+      <div class="wave"></div>
+      <div class="wave"></div>
+    </div>
+    <div class="intro-text-container">
+      <p class="intro-text" id="intro-text-1">At the edge of the world, a light burns.</p>
+      <p class="intro-text" id="intro-text-2">You are its keeper.</p>
+      <p class="intro-text" id="intro-text-3">But your true duty is not the flame.</p>
+      <p class="intro-text" id="intro-text-4">It is the record.</p>
+      <p class="intro-quote" id="intro-quote">What you write becomes the truth.<br>What you omit never happened.<br>What you change... changes everything.</p>
+    </div>
+    <button class="skip-intro" id="skip-intro">Skip Intro</button>
+  </div>
 
   <!-- Start Screen -->
   <div id="start-screen" class="modal-overlay">
