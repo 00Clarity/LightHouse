@@ -1,4 +1,6 @@
-/* THE LIGHTHOUSE KEEPER - Main Styles */
+/* THE LIGHTHOUSE KEEPER - Main Styles
+   PALIMPSEST AESTHETIC: Fire and Void
+*/
 
 /* ===== RESET & BASE ===== */
 *, *::before, *::after {
@@ -15,9 +17,135 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  background: var(--sea-deep);
-  color: var(--land-sand);
+  background: var(--void, #000000);
+  color: var(--aged-paper, #c4a882);
   overflow-x: hidden;
+}
+
+/* ===== MANUSCRIPT WRAPPER ===== */
+/* The game exists on a desk, examining a manuscript */
+
+#game-wrapper {
+  position: fixed;
+  inset: 0;
+  background: var(--void);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Desk surface - barely visible wood grain */
+#game-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    var(--void) 0%,
+    var(--deep-char) 50%,
+    var(--burnt-umber) 100%
+  );
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+/* The manuscript page */
+.manuscript-frame {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  height: calc(100vh - 40px);
+  max-height: 950px;
+  background: var(--aged-paper);
+  border-radius: 2px;
+  box-shadow:
+    0 4px 60px rgba(0,0,0,0.8),
+    0 8px 120px rgba(0,0,0,0.6),
+    inset 0 0 100px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+/* Binding on left edge */
+.manuscript-frame::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 3%;
+  bottom: 3%;
+  width: 18px;
+  background: linear-gradient(
+    90deg,
+    var(--burnt-umber) 0%,
+    var(--dried-blood) 25%,
+    var(--faded-ink) 45%,
+    var(--dried-blood) 65%,
+    transparent 100%
+  );
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* Paper texture overlay */
+.paper-texture {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 200;
+  opacity: 0.08;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Page damage elements */
+.page-damage {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 150;
+}
+
+/* Water stain in corner */
+.water-stain {
+  position: absolute;
+  top: -30px;
+  right: 50px;
+  width: 180px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(139, 119, 101, 0.12) 0%,
+    rgba(139, 119, 101, 0.06) 40%,
+    transparent 70%
+  );
+}
+
+/* Burn mark on edge */
+.burn-mark {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 70px;
+  height: 90px;
+  background: radial-gradient(
+    ellipse at 100% 0%,
+    var(--burnt-umber) 0%,
+    rgba(26, 15, 5, 0.4) 40%,
+    transparent 70%
+  );
+}
+
+/* Foxing (age spots) */
+.foxing {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 25%, rgba(139, 119, 101, 0.08) 0%, transparent 2%),
+    radial-gradient(circle at 85% 75%, rgba(139, 119, 101, 0.06) 0%, transparent 1.5%),
+    radial-gradient(circle at 45% 8%, rgba(139, 119, 101, 0.05) 0%, transparent 1%),
+    radial-gradient(circle at 75% 35%, rgba(139, 119, 101, 0.07) 0%, transparent 1.2%),
+    radial-gradient(circle at 25% 85%, rgba(139, 119, 101, 0.06) 0%, transparent 1.3%);
 }
 
 /* ===== LAYOUT STRUCTURE ===== */
