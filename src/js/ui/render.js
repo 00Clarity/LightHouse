@@ -170,17 +170,23 @@ const Renderer = {
 
   // Render event and investigation options
   renderEvent(event, timeRemaining, completedActions) {
-    if (!event) return;
+    if (!event) {
+      console.warn('renderEvent: No event provided');
+      return;
+    }
 
-    if (this.elements.eventTitle) {
+    if (this.elements.eventTitle && event.title) {
       this.elements.eventTitle.textContent = event.title;
     }
 
-    if (this.elements.eventDescription) {
-      this.elements.eventDescription.innerHTML = event.description.split('\n\n').map(p => `<p>${p}</p>`).join('');
+    if (this.elements.eventDescription && event.description) {
+      const desc = typeof event.description === 'string' ? event.description : '';
+      this.elements.eventDescription.innerHTML = desc.split('\n\n').map(p => `<p>${p}</p>`).join('');
     }
 
-    this.renderActions(event.actions, timeRemaining, completedActions);
+    if (event.actions) {
+      this.renderActions(event.actions, timeRemaining, completedActions);
+    }
   },
 
   // Render investigation action cards
