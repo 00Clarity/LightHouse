@@ -19,7 +19,6 @@ if (!fs.existsSync(distDir)) {
 const cssFiles = [
   'src/css/themes.css',
   'src/css/main.css',
-  'src/css/palimpsest.css',
   'src/css/animations.css'
 ];
 
@@ -47,7 +46,6 @@ const jsFiles = [
   'src/js/ui/modals.js',
   'src/js/ui/intro.js',
   'src/js/ui/transitions.js',
-  'src/js/ui/firelight.js',
   'src/js/audio/engine.js',
   'src/js/main.js'
 ];
@@ -88,15 +86,12 @@ ${combinedCSS}
   <!-- Skip Link for Accessibility -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- THE VOID: True black background -->
-  <div id="game-wrapper">
-
-    <!-- Background Layers -->
-    <div id="ocean-layer" aria-hidden="true"></div>
-    <div id="lighthouse-beam" class="lighthouse-beam" aria-hidden="true"></div>
-    <div id="rain-container" aria-hidden="true"></div>
-    <div id="fog-overlay" aria-hidden="true"></div>
-    <div id="tension-vignette" aria-hidden="true"></div>
+  <!-- Background Layers -->
+  <div id="ocean-layer" aria-hidden="true"></div>
+  <div id="lighthouse-beam" aria-hidden="true"></div>
+  <div id="rain-container" aria-hidden="true"></div>
+  <div id="fog-overlay" aria-hidden="true"></div>
+  <div id="tension-vignette" aria-hidden="true"></div>
 
   <!-- Intro Sequence -->
   <div id="intro-sequence" aria-hidden="true">
@@ -138,22 +133,10 @@ ${combinedCSS}
     </div>
   </div>
 
-  <!-- THE MANUSCRIPT: Game as document being examined -->
-  <div class="manuscript-frame">
-    <!-- Paper texture overlay -->
-    <div class="paper-texture" aria-hidden="true"></div>
-
-    <!-- Page damage effects -->
-    <div class="page-damage" aria-hidden="true">
-      <div class="water-stain"></div>
-      <div class="burn-mark"></div>
-      <div class="foxing"></div>
-    </div>
-
-    <!-- Main Game Container -->
-    <div id="game-container" style="display: none;">
-      <!-- Header -->
-      <header id="header">
+  <!-- Main Game Container -->
+  <div id="game-container" style="display: none;">
+    <!-- Header -->
+    <header id="header">
       <div class="header-left">
         <div class="lighthouse-icon" aria-label="Lighthouse lamp"></div>
         <h1 class="game-title">The Lighthouse Keeper</h1>
@@ -313,9 +296,6 @@ ${combinedCSS}
 
   <!-- Screen Dim for Effects -->
   <div class="screen-dim" id="screen-dim"></div>
-
-  </div><!-- END manuscript-frame -->
-  </div><!-- END game-wrapper -->
 
   <script>
 ${combinedJS}

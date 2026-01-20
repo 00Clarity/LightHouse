@@ -1,54 +1,31 @@
-/* THE LIGHTHOUSE KEEPER - Theme & Typography System
-   PALIMPSEST AESTHETIC: Fire and Void
-   A manuscript that has survived fire, water, time, and lies.
-*/
+/* THE LIGHTHOUSE KEEPER - Theme & Typography System */
 
 /* ===== CSS CUSTOM PROPERTIES ===== */
 :root {
-  /* === THE VOID === */
-  --void: #000000;
-  --deep-char: #0a0604;
-  --burnt-umber: #1a0f05;
-  --dried-blood: #2a1510;
+  /* The Sea (Interface Background) */
+  --sea-deep: #0a1419;
+  --sea-mid: #12202a;
+  --sea-surface: #1a2d3a;
+  --sea-foam: #243d4d;
 
-  /* === THE PAGE === */
-  --aged-paper: #c4a882;
-  --warm-parchment: #e8d4b8;
+  /* The Land (Text, Villagers) */
+  --land-dark: #1a1612;
+  --land-wood: #2a2622;
+  --land-sand: #d4c4a8;
+  --land-light: #e8dcc8;
 
-  /* === THE FIRE === */
-  --lamp-amber: #d4a030;
-  --flame-core: #f0c860;
-  --hot-white: #fff4e0;
+  /* The Light (Accents, Interaction) */
+  --light-glow: #f0c860;
+  --light-dim: #a08030;
+  --light-danger: #c04030;
+  --light-verdant: #40a060;
+  --light-warning: #c09030;
 
-  /* === THE INK === */
-  --faded-ink: #3a3028;
-  --fresh-ink: #1a1410;
-
-  /* === THE WOUND === */
-  --old-blood: #4a2020;
-
-  /* Legacy mappings (for existing code compatibility) */
-  --sea-deep: var(--void);
-  --sea-mid: var(--deep-char);
-  --sea-surface: var(--burnt-umber);
-  --sea-foam: var(--dried-blood);
-
-  --land-dark: var(--fresh-ink);
-  --land-wood: var(--faded-ink);
-  --land-sand: var(--aged-paper);
-  --land-light: var(--warm-parchment);
-
-  --light-glow: var(--flame-core);
-  --light-dim: var(--lamp-amber);
-  --light-danger: var(--old-blood);
-  --light-verdant: #6a5a30; /* Muted olive - no cool colors */
-  --light-warning: var(--lamp-amber);
-
-  /* Family Colors - all warm/neutral */
-  --family-shore: #3a3020;
-  --family-church: #4a4030;
-  --family-newcomer: #3a3028;
-  --family-hill: #4a3a28;
+  /* Family Colors */
+  --family-shore: #2d5a3d;
+  --family-church: #8a7a50;
+  --family-newcomer: #5a6a7a;
+  --family-hill: #7a6a50;
 
   /* Typography */
   --font-display: 'Libre Baskerville', Georgia, serif;
