@@ -1,5 +1,11 @@
 // Main Game Controller for The Lighthouse Keeper
 
+// Global error handler
+window.onerror = function(msg, url, lineNo, columnNo, error) {
+  console.error('Global Error:', msg, 'at line', lineNo, error);
+  return false;
+};
+
 const Game = {
   currentEvent: null,
 
@@ -8,7 +14,9 @@ const Game = {
     console.log('The Lighthouse Keeper - Initializing...');
 
     // Initialize renderer
+    console.log('Calling Renderer.init()...');
     Renderer.init();
+    console.log('Renderer.init() complete. Elements:', Object.keys(Renderer.elements || {}));
 
     // Add modal styles
     Modals.addModalStyles();
@@ -107,10 +115,13 @@ const Game = {
 
   // Start a specific week
   startWeek(week, showTransition = true) {
+    console.log('startWeek called with week:', week);
     const state = StateManager.getState();
+    console.log('startWeek: state.week =', state.week, 'state.story =', state.story);
 
     // Get event for this week
     this.currentEvent = StorySystem.getCurrentEvent(week, state.story, state.villagers);
+    console.log('startWeek: currentEvent =', this.currentEvent);
 
     if (showTransition && week > 1) {
       Renderer.showWeekTransition(week, () => {

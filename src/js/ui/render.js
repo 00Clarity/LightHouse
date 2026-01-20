@@ -33,6 +33,14 @@ const Renderer = {
         context: document.getElementById('slot-context')
       }
     };
+    // Debug: log which elements were found
+    console.log('cacheElements: Found elements:', {
+      villagerList: !!this.elements.villagerList,
+      eventTitle: !!this.elements.eventTitle,
+      eventDescription: !!this.elements.eventDescription,
+      actionGrid: !!this.elements.actionGrid,
+      fragmentList: !!this.elements.fragmentList
+    });
   },
 
   // Bind UI events
@@ -89,12 +97,17 @@ const Renderer = {
 
   // Render villager list
   renderVillagers(villagers, involvedIds = [], completedActions) {
-    if (!this.elements.villagerList) return;
+    console.log('renderVillagers called:', { hasElement: !!this.elements.villagerList, villagers, involvedIds });
+    if (!this.elements.villagerList) {
+      console.warn('renderVillagers: No villagerList element!');
+      return;
+    }
 
     // Ensure completedActions is a Set
     const actions = completedActions instanceof Set ? completedActions : new Set();
 
     const villagerIds = ['marta', 'peter', 'anna', 'tomas', 'lucia', 'simao', 'bela', 'jakub', 'helena'];
+    console.log('renderVillagers: Checking Villagers global:', typeof Villagers, Villagers ? Object.keys(Villagers) : 'undefined');
 
     this.elements.villagerList.innerHTML = villagerIds.map(id => {
       const villager = Villagers[id];
@@ -170,20 +183,25 @@ const Renderer = {
 
   // Render event and investigation options
   renderEvent(event, timeRemaining, completedActions) {
+    console.log('renderEvent called:', { event, timeRemaining });
     if (!event) {
       console.warn('renderEvent: No event provided');
       return;
     }
 
+    console.log('renderEvent: Setting title to:', event.title);
     if (this.elements.eventTitle && event.title) {
       this.elements.eventTitle.textContent = event.title;
     }
 
+    console.log('renderEvent: Setting description, hasElement:', !!this.elements.eventDescription, 'descLength:', event.description?.length);
     if (this.elements.eventDescription && event.description) {
       const desc = typeof event.description === 'string' ? event.description : '';
       this.elements.eventDescription.innerHTML = desc.split('\n\n').map(p => `<p>${p}</p>`).join('');
+      console.log('renderEvent: Description innerHTML set, length:', this.elements.eventDescription.innerHTML.length);
     }
 
+    console.log('renderEvent: Rendering actions, count:', event.actions?.length);
     if (event.actions) {
       this.renderActions(event.actions, timeRemaining, completedActions);
     }
@@ -191,8 +209,15 @@ const Renderer = {
 
   // Render investigation action cards
   renderActions(actions, timeRemaining, completedActions) {
-    if (!this.elements.actionGrid) return;
-    if (!actions || !Array.isArray(actions)) return;
+    console.log('renderActions called:', { actionsCount: actions?.length, timeRemaining, hasGrid: !!this.elements.actionGrid });
+    if (!this.elements.actionGrid) {
+      console.warn('renderActions: No actionGrid element!');
+      return;
+    }
+    if (!actions || !Array.isArray(actions)) {
+      console.warn('renderActions: Invalid actions array');
+      return;
+    }
 
     // Ensure completedActions is a Set
     const completed = completedActions instanceof Set ? completedActions : new Set();
