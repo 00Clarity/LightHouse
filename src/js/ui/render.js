@@ -368,6 +368,14 @@ const Renderer = {
     this.updateEntryPreview();
   },
 
+  // Clear all entry slots (for week transitions)
+  clearEntrySlots() {
+    const slotTypes = ['tone', 'subject', 'action', 'object', 'context'];
+    slotTypes.forEach(slot => {
+      this.updateSlot(slot, null);
+    });
+  },
+
   // Update entry preview
   updateEntryPreview() {
     if (!this.elements.entryPreview) return;
