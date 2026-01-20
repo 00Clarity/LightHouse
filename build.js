@@ -45,6 +45,7 @@ const jsFiles = [
   'src/js/ui/fragments.js',
   'src/js/ui/modals.js',
   'src/js/ui/intro.js',
+  'src/js/ui/transitions.js',
   'src/js/audio/engine.js',
   'src/js/main.js'
 ];
@@ -251,10 +252,36 @@ ${combinedCSS}
     </div>
   </div>
 
-  <!-- Week Transition -->
+  <!-- Week Transition (Simple) -->
   <div id="week-transition" aria-hidden="true">
     <div class="transition-text" id="transition-week"></div>
     <div class="transition-subtext" id="transition-subtext"></div>
+  </div>
+
+  <!-- Week Transition Sequence (Dynamic) -->
+  <div id="week-transition-sequence" aria-hidden="true">
+    <div class="transition-background"></div>
+    <div class="transition-storm-overlay"></div>
+    <div class="transition-silhouette">
+      <div class="village-house house-1"></div>
+      <div class="village-house house-2"></div>
+      <div class="village-house house-3"></div>
+      <div class="village-church"></div>
+      <div class="village-house house-4"></div>
+      <div class="village-house house-5"></div>
+    </div>
+    <div class="transition-content">
+      <div class="transition-tension-container">
+        <span class="transition-tension-label">Village Tension</span>
+        <div class="transition-tension-bar">
+          <div class="transition-tension-fill"></div>
+        </div>
+      </div>
+      <h2 class="transition-week-text">Week 2</h2>
+      <p class="transition-subtitle">Whispers in the Chapel</p>
+      <div class="transition-consequence-list"></div>
+    </div>
+    <button class="transition-skip">Skip</button>
   </div>
 
   <!-- Consequence Modal -->
