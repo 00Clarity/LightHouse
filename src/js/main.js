@@ -153,15 +153,24 @@ const Game = {
     console.log('startWeek: currentEvent =', this.currentEvent);
 
     if (showTransition && week > 1) {
-      Renderer.showWeekTransition(week, () => {
+      // Use dynamic week transition with narrative consequences
+      WeekTransition.play(week, state, () => {
         this.renderWeek();
+        // Week-specific effects after transition
+        this.applyWeekEffects(week);
       });
-      AudioEngine.playWeekTransition();
     } else {
       this.renderWeek();
+      // Week-specific effects immediately
+      this.applyWeekEffects(week);
     }
 
-    // Week-specific effects
+    // Save state
+    StateManager.save();
+  },
+
+  // Apply visual/audio effects for specific weeks
+  applyWeekEffects(week) {
     if (week === 4) {
       Renderer.enableRain();
       AudioEngine.setStormIntensity(0.7);
@@ -172,9 +181,6 @@ const Game = {
     if (week === 5) {
       Renderer.enableFog();
     }
-
-    // Save state
-    StateManager.save();
   },
 
   // Render current week's content
