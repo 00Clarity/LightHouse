@@ -196,6 +196,9 @@ const Game = {
       // Update tension
       Renderer.updateTension(state.story.tension);
 
+      // Clear entry slots from previous week
+      Renderer.clearEntrySlots();
+
       // Render villagers
       const involvedIds = this.currentEvent ? this.currentEvent.involvedVillagers : [];
       console.log('renderWeek: Rendering villagers', { involvedIds });
@@ -213,7 +216,7 @@ const Game = {
       // Hide testimony
       Renderer.hideTestimony();
 
-      // Load available fragments
+      // Load available fragments for THIS week only
       const fragments = getAvailableFragments(state.week, state.story);
       console.log('renderWeek: Got fragments', { count: fragments?.length });
       state.current.fragments = fragments;
