@@ -1,4 +1,11 @@
 // Main Game Controller for The Lighthouse Keeper
+console.log('=== LIGHTHOUSE KEEPER SCRIPT LOADED ===');
+
+// Global error handler
+window.onerror = function(msg, url, lineNo, columnNo, error) {
+  console.error('Global Error:', msg, 'at line', lineNo, error);
+  return false;
+};
 
 const Game = {
   currentEvent: null,
@@ -8,7 +15,9 @@ const Game = {
     console.log('The Lighthouse Keeper - Initializing...');
 
     // Initialize renderer
+    console.log('Calling Renderer.init()...');
     Renderer.init();
+    console.log('Renderer.init() complete. Elements:', Object.keys(Renderer.elements || {}));
 
     // Add modal styles
     Modals.addModalStyles();
@@ -107,10 +116,13 @@ const Game = {
 
   // Start a specific week
   startWeek(week, showTransition = true) {
+    console.log('startWeek called with week:', week);
     const state = StateManager.getState();
+    console.log('startWeek: state.week =', state.week, 'state.story =', state.story);
 
     // Get event for this week
     this.currentEvent = StorySystem.getCurrentEvent(week, state.story, state.villagers);
+    console.log('startWeek: currentEvent =', this.currentEvent);
 
     if (showTransition && week > 1) {
       Renderer.showWeekTransition(week, () => {
@@ -385,7 +397,13 @@ const Game = {
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  Game.init();
+  console.log('=== DOMContentLoaded fired, calling Game.init() ===');
+  try {
+    Game.init();
+  } catch (e) {
+    console.error('CRITICAL: Game.init() failed:', e);
+    document.body.innerHTML = '<div style="color:red;padding:20px;font-size:18px;">Error initializing game: ' + e.message + '<br><br>Check the browser console (F12) for details.</div>';
+  }
 });
 
 // Export for testing
