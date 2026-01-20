@@ -256,38 +256,6 @@ const Renderer = {
   showTestimony(testimony, villager) {
     if (!this.elements.testimonyContainer || !testimony) return;
 
-    // Build draggable fragments HTML
-    let fragmentsHtml = '';
-    if (testimony.fragments && testimony.fragments.length > 0) {
-      const fragmentItems = testimony.fragments.map(fragId => {
-        const frag = this.getFragmentById(fragId);
-        if (!frag) return '';
-        const isUsed = GameState.current.usedFragments instanceof Set
-          ? GameState.current.usedFragments.has(fragId)
-          : false;
-        return `
-          <div class="fragment testimony-fragment ${isUsed ? 'used' : ''}"
-               data-fragment-id="${frag.id}"
-               data-type="${frag.type}"
-               draggable="${!isUsed}"
-               tabindex="0"
-               title="Drag to ${frag.type} slot"
-               aria-label="${frag.text}">
-            "${frag.text}"
-          </div>
-        `;
-      }).join('');
-
-      fragmentsHtml = `
-        <div class="fragments-gained">
-          <div class="fragments-gained-title">Fragments gathered (drag to ledger):</div>
-          <div class="testimony-fragments-list">
-            ${fragmentItems}
-          </div>
-        </div>
-      `;
-    }
-
     this.elements.testimonyContainer.style.display = 'block';
     this.elements.testimonyContainer.innerHTML = `
       <div class="testimony-speaker">
@@ -296,13 +264,16 @@ const Renderer = {
       </div>
       <blockquote class="testimony-text">${testimony.text}</blockquote>
       <p class="testimony-observation">${testimony.observation}</p>
-      ${fragmentsHtml}
+      ${testimony.fragments ? `
+        <div class="fragments-gained">
+          <div class="fragments-gained-title">Fragments gathered:</div>
+          ${testimony.fragments.map(fragId => {
+            const frag = this.getFragmentById(fragId);
+            return frag ? `<span class="fragment-preview">"${frag.text}"</span>` : '';
+          }).join('')}
+        </div>
+      ` : ''}
     `;
-
-    // Initialize drag handlers for testimony fragments
-    if (typeof FragmentUI !== 'undefined') {
-      FragmentUI.initDragHandlers();
-    }
 
     // Scroll to testimony
     this.elements.testimonyContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -401,22 +372,8 @@ const Renderer = {
   clearEntrySlots() {
     const slotTypes = ['tone', 'subject', 'action', 'object', 'context'];
     slotTypes.forEach(slot => {
-      // Clear via updateSlot
       this.updateSlot(slot, null);
-
-      // Also directly clear DOM as fallback
-      const slotEl = document.getElementById(`slot-${slot}`);
-      if (slotEl) {
-        slotEl.textContent = '';
-        const container = slotEl.closest('.entry-slot');
-        if (container) {
-          container.classList.remove('filled');
-        }
-      }
     });
-
-    // Force update the preview
-    this.updateEntryPreview();
   },
 
   // Update entry preview

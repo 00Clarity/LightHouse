@@ -14,57 +14,34 @@
 
   <style>
 /* === src/css/themes.css === */
-/* THE LIGHTHOUSE KEEPER - Theme & Typography System
-   PALIMPSEST AESTHETIC: Fire and Void
-   A manuscript that has survived fire, water, time, and lies.
-*/
+/* THE LIGHTHOUSE KEEPER - Theme & Typography System */
 
 /* ===== CSS CUSTOM PROPERTIES ===== */
 :root {
-  /* === THE VOID === */
-  --void: #000000;
-  --deep-char: #0a0604;
-  --burnt-umber: #1a0f05;
-  --dried-blood: #2a1510;
+  /* The Sea (Interface Background) */
+  --sea-deep: #0a1419;
+  --sea-mid: #12202a;
+  --sea-surface: #1a2d3a;
+  --sea-foam: #243d4d;
 
-  /* === THE PAGE === */
-  --aged-paper: #c4a882;
-  --warm-parchment: #e8d4b8;
+  /* The Land (Text, Villagers) */
+  --land-dark: #1a1612;
+  --land-wood: #2a2622;
+  --land-sand: #d4c4a8;
+  --land-light: #e8dcc8;
 
-  /* === THE FIRE === */
-  --lamp-amber: #d4a030;
-  --flame-core: #f0c860;
-  --hot-white: #fff4e0;
+  /* The Light (Accents, Interaction) */
+  --light-glow: #f0c860;
+  --light-dim: #a08030;
+  --light-danger: #c04030;
+  --light-verdant: #40a060;
+  --light-warning: #c09030;
 
-  /* === THE INK === */
-  --faded-ink: #3a3028;
-  --fresh-ink: #1a1410;
-
-  /* === THE WOUND === */
-  --old-blood: #4a2020;
-
-  /* Legacy mappings (for existing code compatibility) */
-  --sea-deep: var(--void);
-  --sea-mid: var(--deep-char);
-  --sea-surface: var(--burnt-umber);
-  --sea-foam: var(--dried-blood);
-
-  --land-dark: var(--fresh-ink);
-  --land-wood: var(--faded-ink);
-  --land-sand: var(--aged-paper);
-  --land-light: var(--warm-parchment);
-
-  --light-glow: var(--flame-core);
-  --light-dim: var(--lamp-amber);
-  --light-danger: var(--old-blood);
-  --light-verdant: #6a5a30; /* Muted olive - no cool colors */
-  --light-warning: var(--lamp-amber);
-
-  /* Family Colors - all warm/neutral */
-  --family-shore: #3a3020;
-  --family-church: #4a4030;
-  --family-newcomer: #3a3028;
-  --family-hill: #4a3a28;
+  /* Family Colors */
+  --family-shore: #2d5a3d;
+  --family-church: #8a7a50;
+  --family-newcomer: #5a6a7a;
+  --family-hill: #7a6a50;
 
   /* Typography */
   --font-display: 'Libre Baskerville', Georgia, serif;
@@ -307,9 +284,7 @@ small {
 
 
 /* === src/css/main.css === */
-/* THE LIGHTHOUSE KEEPER - Main Styles
-   PALIMPSEST AESTHETIC: Fire and Void
-*/
+/* THE LIGHTHOUSE KEEPER - Main Styles */
 
 /* ===== RESET & BASE ===== */
 *, *::before, *::after {
@@ -326,135 +301,9 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  background: var(--void, #000000);
-  color: var(--aged-paper, #c4a882);
+  background: var(--sea-deep);
+  color: var(--land-sand);
   overflow-x: hidden;
-}
-
-/* ===== MANUSCRIPT WRAPPER ===== */
-/* The game exists on a desk, examining a manuscript */
-
-#game-wrapper {
-  position: fixed;
-  inset: 0;
-  background: var(--void);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-/* Desk surface - barely visible wood grain */
-#game-wrapper::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    var(--void) 0%,
-    var(--deep-char) 50%,
-    var(--burnt-umber) 100%
-  );
-  opacity: 0.15;
-  pointer-events: none;
-}
-
-/* The manuscript page */
-.manuscript-frame {
-  position: relative;
-  width: 100%;
-  max-width: 1400px;
-  height: calc(100vh - 40px);
-  max-height: 950px;
-  background: var(--aged-paper);
-  border-radius: 2px;
-  box-shadow:
-    0 4px 60px rgba(0,0,0,0.8),
-    0 8px 120px rgba(0,0,0,0.6),
-    inset 0 0 100px rgba(0,0,0,0.08);
-  overflow: hidden;
-}
-
-/* Binding on left edge */
-.manuscript-frame::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 3%;
-  bottom: 3%;
-  width: 18px;
-  background: linear-gradient(
-    90deg,
-    var(--burnt-umber) 0%,
-    var(--dried-blood) 25%,
-    var(--faded-ink) 45%,
-    var(--dried-blood) 65%,
-    transparent 100%
-  );
-  z-index: 100;
-  pointer-events: none;
-}
-
-/* Paper texture overlay */
-.paper-texture {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 200;
-  opacity: 0.08;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-}
-
-/* Page damage elements */
-.page-damage {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 150;
-}
-
-/* Water stain in corner */
-.water-stain {
-  position: absolute;
-  top: -30px;
-  right: 50px;
-  width: 180px;
-  height: 140px;
-  border-radius: 50%;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(139, 119, 101, 0.12) 0%,
-    rgba(139, 119, 101, 0.06) 40%,
-    transparent 70%
-  );
-}
-
-/* Burn mark on edge */
-.burn-mark {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  width: 70px;
-  height: 90px;
-  background: radial-gradient(
-    ellipse at 100% 0%,
-    var(--burnt-umber) 0%,
-    rgba(26, 15, 5, 0.4) 40%,
-    transparent 70%
-  );
-}
-
-/* Foxing (age spots) */
-.foxing {
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(circle at 15% 25%, rgba(139, 119, 101, 0.08) 0%, transparent 2%),
-    radial-gradient(circle at 85% 75%, rgba(139, 119, 101, 0.06) 0%, transparent 1.5%),
-    radial-gradient(circle at 45% 8%, rgba(139, 119, 101, 0.05) 0%, transparent 1%),
-    radial-gradient(circle at 75% 35%, rgba(139, 119, 101, 0.07) 0%, transparent 1.2%),
-    radial-gradient(circle at 25% 85%, rgba(139, 119, 101, 0.06) 0%, transparent 1.3%);
 }
 
 /* ===== LAYOUT STRUCTURE ===== */
@@ -896,40 +745,6 @@ body {
   margin: var(--space-xs);
 }
 
-/* Testimony fragments - draggable */
-.testimony-fragments-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
-  margin-top: var(--space-sm);
-}
-
-.testimony-fragment {
-  background: rgba(240, 200, 96, 0.15);
-  border: 1px dashed rgba(240, 200, 96, 0.4);
-  color: var(--light-glow);
-  cursor: grab;
-  transition: all 0.2s ease;
-}
-
-.testimony-fragment:hover {
-  background: rgba(240, 200, 96, 0.25);
-  border-color: var(--light-glow);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.testimony-fragment.dragging {
-  opacity: 0.5;
-  cursor: grabbing;
-}
-
-.testimony-fragment.used {
-  opacity: 0.4;
-  cursor: not-allowed;
-  border-style: solid;
-}
-
 /* ===== LOG PANEL ===== */
 
 #log-panel {
@@ -1153,596 +968,6 @@ body {
   #log-panel {
     max-height: none;
   }
-}
-
-
-/* === src/css/palimpsest.css === */
-/* THE LIGHTHOUSE KEEPER - Palimpsest Aesthetic
-   A manuscript that has survived fire, water, time, and lies.
-   The only light comes from flame. Everything else is void.
-*/
-
-/* ===== THE PALETTE: Fire and Void ===== */
-:root {
-  /* The Void - TRUE BLACK */
-  --void: #000000;
-  --deep-char: #0a0604;
-  --burnt-umber: #1a0f05;
-  --dried-blood: #2a1510;
-
-  /* The Page - Parchment */
-  --aged-paper: #c4a882;
-  --warm-parchment: #e8d4b8;
-
-  /* The Fire - Illumination */
-  --lamp-amber: #d4a030;
-  --flame-core: #f0c860;
-  --hot-white: #fff4e0;
-
-  /* The Ink - Text */
-  --faded-ink: #3a3028;
-  --fresh-ink: #1a1410;
-
-  /* The Wound - Violence */
-  --old-blood: #4a2020;
-
-  /* Semantic mappings for existing code */
-  --sea-deep: var(--void);
-  --sea-mid: var(--deep-char);
-  --sea-surface: var(--burnt-umber);
-  --sea-foam: var(--dried-blood);
-
-  --land-dark: var(--fresh-ink);
-  --land-wood: var(--faded-ink);
-  --land-sand: var(--aged-paper);
-  --land-light: var(--warm-parchment);
-
-  --light-glow: var(--flame-core);
-  --light-dim: var(--lamp-amber);
-  --light-danger: var(--old-blood);
-  --light-warning: var(--lamp-amber);
-  --light-verdant: #6a5a30; /* Muted olive - no greens */
-
-  /* Fire animation */
-  --flicker-speed: 100ms;
-}
-
-/* ===== THE VOID: True Black Foundation ===== */
-
-html, body {
-  background: var(--void);
-  color: var(--aged-paper);
-}
-
-/* The game exists on a desk examining a manuscript */
-#game-wrapper {
-  position: fixed;
-  inset: 0;
-  background: var(--void);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-/* The desk surface - deep wood grain in darkness */
-.desk-surface {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg,
-      var(--void) 0%,
-      var(--deep-char) 50%,
-      var(--burnt-umber) 100%
-    );
-  opacity: 0.3;
-}
-
-/* ===== THE MANUSCRIPT FRAME ===== */
-
-.manuscript-frame {
-  position: relative;
-  width: min(95vw, 1400px);
-  height: min(90vh, 900px);
-  background: var(--aged-paper);
-  box-shadow:
-    0 0 60px rgba(0,0,0,0.8),
-    0 0 120px rgba(0,0,0,0.6),
-    inset 0 0 100px rgba(0,0,0,0.1);
-  border-radius: 2px;
-}
-
-/* Binding on the left edge */
-.manuscript-frame::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 5%;
-  bottom: 5%;
-  width: 20px;
-  background:
-    linear-gradient(90deg,
-      var(--burnt-umber) 0%,
-      var(--dried-blood) 30%,
-      var(--faded-ink) 50%,
-      var(--dried-blood) 70%,
-      transparent 100%
-    );
-  border-radius: 0 2px 2px 0;
-}
-
-/* Torn/burned edges */
-.manuscript-frame::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border: 1px solid var(--faded-ink);
-  border-radius: 2px;
-  /* Edge damage simulation */
-  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect fill='white' x='1' y='1' width='98' height='98' rx='1'/%3E%3C/svg%3E");
-}
-
-/* Page damage overlays */
-.page-damage {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-}
-
-/* Water stains */
-.water-stain {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(139, 119, 101, 0.15) 0%,
-    rgba(139, 119, 101, 0.08) 40%,
-    transparent 70%
-  );
-}
-
-.water-stain-1 {
-  top: -5%;
-  right: 10%;
-  width: 200px;
-  height: 150px;
-}
-
-.water-stain-2 {
-  bottom: 5%;
-  left: 5%;
-  width: 120px;
-  height: 180px;
-}
-
-/* Burn marks */
-.burn-mark {
-  position: absolute;
-  background: radial-gradient(
-    ellipse at center,
-    var(--burnt-umber) 0%,
-    rgba(26, 15, 5, 0.5) 30%,
-    transparent 60%
-  );
-}
-
-.burn-mark-1 {
-  top: -2%;
-  right: -1%;
-  width: 80px;
-  height: 100px;
-  border-radius: 0 0 0 100%;
-}
-
-/* Foxing (age spots) */
-.foxing {
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(
-    circle at 20% 30%,
-    rgba(139, 119, 101, 0.1) 0%,
-    transparent 2%
-  ),
-  radial-gradient(
-    circle at 80% 70%,
-    rgba(139, 119, 101, 0.08) 0%,
-    transparent 1.5%
-  ),
-  radial-gradient(
-    circle at 50% 10%,
-    rgba(139, 119, 101, 0.06) 0%,
-    transparent 1%
-  ),
-  radial-gradient(
-    circle at 70% 40%,
-    rgba(139, 119, 101, 0.07) 0%,
-    transparent 1.2%
-  );
-}
-
-/* ===== PAPER TEXTURE OVERLAY ===== */
-
-.paper-texture {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 10;
-  opacity: 0.12;
-  mix-blend-mode: multiply;
-  /* Generated paper grain texture */
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-}
-
-/* ===== FIRE FLICKER SYSTEM ===== */
-
-/* The lighthouse lamp - always flickering */
-.lighthouse-lamp,
-.lamp-light,
-[data-light-source="lamp"] {
-  animation: fire-flicker 0.15s infinite;
-}
-
-@keyframes fire-flicker {
-  0%, 100% {
-    opacity: 1;
-    filter: brightness(1);
-  }
-  25% {
-    opacity: 0.97;
-    filter: brightness(0.98);
-  }
-  50% {
-    opacity: 0.99;
-    filter: brightness(1.02);
-  }
-  75% {
-    opacity: 0.96;
-    filter: brightness(0.97);
-  }
-}
-
-/* Occasional larger flicker */
-@keyframes fire-flicker-large {
-  0%, 90%, 100% {
-    opacity: 1;
-    filter: brightness(1);
-  }
-  95% {
-    opacity: 0.85;
-    filter: brightness(0.9);
-  }
-}
-
-/* Candle flicker - smaller, more frequent */
-.candle-light,
-[data-light-source="candle"] {
-  animation: candle-flicker 0.1s infinite;
-}
-
-@keyframes candle-flicker {
-  0%, 100% { opacity: 1; }
-  33% { opacity: 0.92; }
-  66% { opacity: 0.98; }
-}
-
-/* ===== ILLUMINATION SYSTEM ===== */
-
-/* Default state: in void/darkness */
-.in-darkness {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-/* Illuminated by beam */
-.illuminated {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Partially illuminated (edge of beam) */
-.partial-light {
-  opacity: 0.6;
-  filter: brightness(0.7);
-}
-
-/* The light falloff gradient */
-.light-falloff {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse at var(--beam-x, 50%) var(--beam-y, 50%),
-    transparent 0%,
-    transparent 20%,
-    rgba(0,0,0,0.3) 40%,
-    rgba(0,0,0,0.7) 60%,
-    var(--void) 80%
-  );
-  z-index: 100;
-}
-
-/* ===== PALIMPSEST EFFECT ===== */
-
-/* Previous versions bleeding through */
-.palimpsest-layer {
-  position: absolute;
-  inset: 0;
-  opacity: 0.08;
-  filter: blur(1px) sepia(100%);
-  mix-blend-mode: multiply;
-  pointer-events: none;
-  animation: palimpsest-drift 30s ease-in-out infinite;
-}
-
-@keyframes palimpsest-drift {
-  0%, 100% { transform: translate(0, 0); }
-  25% { transform: translate(1px, 0.5px); }
-  50% { transform: translate(2px, 1px); }
-  75% { transform: translate(1px, 0.5px); }
-}
-
-/* Strikethrough for revisions - original visible beneath */
-.revision-strikethrough {
-  position: relative;
-  color: var(--faded-ink);
-  opacity: 0.6;
-}
-
-.revision-strikethrough::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 1px;
-  background: var(--fresh-ink);
-  transform: rotate(-0.5deg);
-}
-
-/* ===== INK EFFECTS ===== */
-
-/* Fresh ink appearance */
-@keyframes ink-bleed {
-  0% {
-    filter: blur(2px);
-    opacity: 0.7;
-  }
-  50% {
-    filter: blur(0.5px);
-    opacity: 0.9;
-  }
-  100% {
-    filter: blur(0);
-    opacity: 1;
-  }
-}
-
-.text-placed,
-.ink-fresh {
-  animation: ink-bleed 0.4s ease-out;
-}
-
-/* Ink blot decoration */
-.ink-blot {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: var(--fresh-ink);
-  border-radius: 50% 40% 60% 50%;
-  opacity: 0.3;
-  transform: rotate(var(--blot-rotation, 0deg));
-}
-
-/* ===== CHIAROSCURO PORTRAITS ===== */
-
-.portrait-chiaroscuro {
-  position: relative;
-  overflow: hidden;
-}
-
-/* Half-lit face effect */
-.portrait-chiaroscuro::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    transparent 45%,
-    rgba(0,0,0,0.4) 55%,
-    var(--void) 100%
-  );
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Eyes catch the light */
-.portrait-eyes {
-  color: var(--flame-core);
-  text-shadow: 0 0 10px var(--lamp-amber);
-}
-
-/* ===== SILHOUETTE RENDERING ===== */
-
-.silhouette {
-  filter: brightness(0) saturate(0);
-  opacity: 0.8;
-}
-
-.silhouette-revealed {
-  filter: none;
-  opacity: 1;
-  transition: filter 0.5s ease, opacity 0.5s ease;
-}
-
-/* ===== MARGIN NOTES (MARGINALIA) ===== */
-
-.marginalia {
-  position: absolute;
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 0.75rem;
-  color: var(--faded-ink);
-  opacity: 0.5;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  transform: rotate(180deg);
-}
-
-.marginalia-left {
-  left: 25px;
-  top: 20%;
-}
-
-.marginalia-right {
-  right: 15px;
-  bottom: 30%;
-  writing-mode: vertical-lr;
-  transform: none;
-}
-
-/* ===== RULED LINES (LEDGER) ===== */
-
-.ruled-paper {
-  background-image: repeating-linear-gradient(
-    180deg,
-    transparent 0px,
-    transparent 28px,
-    rgba(58, 48, 40, 0.15) 28px,
-    rgba(58, 48, 40, 0.15) 29px
-  );
-  background-position: 0 10px;
-}
-
-/* ===== THE BEAM ===== */
-
-.lighthouse-beam {
-  position: absolute;
-  pointer-events: none;
-  z-index: 50;
-  /* Beam originates from lighthouse position */
-  --beam-origin-x: 85%;
-  --beam-origin-y: 30%;
-  --beam-angle: 0deg;
-  --beam-width: 45deg;
-
-  background: conic-gradient(
-    from calc(var(--beam-angle) - var(--beam-width) / 2) at var(--beam-origin-x) var(--beam-origin-y),
-    transparent 0deg,
-    var(--hot-white) 0deg,
-    var(--flame-core) 5deg,
-    var(--lamp-amber) 15deg,
-    var(--burnt-umber) 30deg,
-    var(--void) calc(var(--beam-width)),
-    transparent calc(var(--beam-width))
-  );
-
-  inset: 0;
-  opacity: 0.9;
-  mix-blend-mode: screen;
-}
-
-/* Beam rotation animation */
-.lighthouse-beam.rotating {
-  animation: beam-rotate 12s linear infinite;
-}
-
-@keyframes beam-rotate {
-  from { --beam-angle: 0deg; }
-  to { --beam-angle: 360deg; }
-}
-
-/* Dust motes in the beam */
-.beam-dust {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: radial-gradient(
-    circle at 50% 50%,
-    var(--hot-white) 0%,
-    transparent 2%
-  );
-  background-size: 100px 100px;
-  opacity: 0.1;
-  animation: dust-drift 8s linear infinite;
-}
-
-@keyframes dust-drift {
-  from { transform: translate(0, 0); }
-  to { transform: translate(20px, 30px); }
-}
-
-/* ===== MEMORY BLEED EFFECTS ===== */
-
-.memory-bleed {
-  animation: memory-flash 0.5s ease-out;
-}
-
-@keyframes memory-flash {
-  0% {
-    filter: sepia(0) blur(0);
-    opacity: 1;
-  }
-  30% {
-    filter: sepia(100%) blur(2px);
-    opacity: 0.7;
-  }
-  60% {
-    filter: sepia(80%) blur(1px);
-    opacity: 0.85;
-  }
-  100% {
-    filter: sepia(0) blur(0);
-    opacity: 1;
-  }
-}
-
-/* Double exposure for time bleeds */
-.time-bleed {
-  position: relative;
-}
-
-.time-bleed::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: inherit;
-  opacity: 0.3;
-  filter: sepia(100%) blur(1px);
-  transform: translate(2px, 1px);
-  animation: time-drift 2s ease-in-out infinite;
-}
-
-@keyframes time-drift {
-  0%, 100% { transform: translate(2px, 1px); opacity: 0.2; }
-  50% { transform: translate(3px, 2px); opacity: 0.35; }
-}
-
-/* ===== VOID AREAS ===== */
-
-.void-area {
-  background: var(--void);
-  /* No gradients, no softness - pure black */
-}
-
-/* Edge of known world */
-.void-edge {
-  position: relative;
-}
-
-.void-edge::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to var(--void-direction, bottom),
-    transparent 70%,
-    var(--void) 100%
-  );
-  pointer-events: none;
 }
 
 
@@ -3108,15 +2333,12 @@ html, body {
   <!-- Skip Link for Accessibility -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- THE VOID: True black background -->
-  <div id="game-wrapper">
-
-    <!-- Background Layers -->
-    <div id="ocean-layer" aria-hidden="true"></div>
-    <div id="lighthouse-beam" class="lighthouse-beam" aria-hidden="true"></div>
-    <div id="rain-container" aria-hidden="true"></div>
-    <div id="fog-overlay" aria-hidden="true"></div>
-    <div id="tension-vignette" aria-hidden="true"></div>
+  <!-- Background Layers -->
+  <div id="ocean-layer" aria-hidden="true"></div>
+  <div id="lighthouse-beam" aria-hidden="true"></div>
+  <div id="rain-container" aria-hidden="true"></div>
+  <div id="fog-overlay" aria-hidden="true"></div>
+  <div id="tension-vignette" aria-hidden="true"></div>
 
   <!-- Intro Sequence -->
   <div id="intro-sequence" aria-hidden="true">
@@ -3158,22 +2380,10 @@ html, body {
     </div>
   </div>
 
-  <!-- THE MANUSCRIPT: Game as document being examined -->
-  <div class="manuscript-frame">
-    <!-- Paper texture overlay -->
-    <div class="paper-texture" aria-hidden="true"></div>
-
-    <!-- Page damage effects -->
-    <div class="page-damage" aria-hidden="true">
-      <div class="water-stain"></div>
-      <div class="burn-mark"></div>
-      <div class="foxing"></div>
-    </div>
-
-    <!-- Main Game Container -->
-    <div id="game-container" style="display: none;">
-      <!-- Header -->
-      <header id="header">
+  <!-- Main Game Container -->
+  <div id="game-container" style="display: none;">
+    <!-- Header -->
+    <header id="header">
       <div class="header-left">
         <div class="lighthouse-icon" aria-label="Lighthouse lamp"></div>
         <h1 class="game-title">The Lighthouse Keeper</h1>
@@ -3333,9 +2543,6 @@ html, body {
 
   <!-- Screen Dim for Effects -->
   <div class="screen-dim" id="screen-dim"></div>
-
-  </div><!-- END manuscript-frame -->
-  </div><!-- END game-wrapper -->
 
   <script>
 // === src/js/data/villagers.js ===
@@ -6833,38 +6040,6 @@ const Renderer = {
   showTestimony(testimony, villager) {
     if (!this.elements.testimonyContainer || !testimony) return;
 
-    // Build draggable fragments HTML
-    let fragmentsHtml = '';
-    if (testimony.fragments && testimony.fragments.length > 0) {
-      const fragmentItems = testimony.fragments.map(fragId => {
-        const frag = this.getFragmentById(fragId);
-        if (!frag) return '';
-        const isUsed = GameState.current.usedFragments instanceof Set
-          ? GameState.current.usedFragments.has(fragId)
-          : false;
-        return `
-          <div class="fragment testimony-fragment ${isUsed ? 'used' : ''}"
-               data-fragment-id="${frag.id}"
-               data-type="${frag.type}"
-               draggable="${!isUsed}"
-               tabindex="0"
-               title="Drag to ${frag.type} slot"
-               aria-label="${frag.text}">
-            "${frag.text}"
-          </div>
-        `;
-      }).join('');
-
-      fragmentsHtml = `
-        <div class="fragments-gained">
-          <div class="fragments-gained-title">Fragments gathered (drag to ledger):</div>
-          <div class="testimony-fragments-list">
-            ${fragmentItems}
-          </div>
-        </div>
-      `;
-    }
-
     this.elements.testimonyContainer.style.display = 'block';
     this.elements.testimonyContainer.innerHTML = `
       <div class="testimony-speaker">
@@ -6873,13 +6048,16 @@ const Renderer = {
       </div>
       <blockquote class="testimony-text">${testimony.text}</blockquote>
       <p class="testimony-observation">${testimony.observation}</p>
-      ${fragmentsHtml}
+      ${testimony.fragments ? `
+        <div class="fragments-gained">
+          <div class="fragments-gained-title">Fragments gathered:</div>
+          ${testimony.fragments.map(fragId => {
+            const frag = this.getFragmentById(fragId);
+            return frag ? `<span class="fragment-preview">"${frag.text}"</span>` : '';
+          }).join('')}
+        </div>
+      ` : ''}
     `;
-
-    // Initialize drag handlers for testimony fragments
-    if (typeof FragmentUI !== 'undefined') {
-      FragmentUI.initDragHandlers();
-    }
 
     // Scroll to testimony
     this.elements.testimonyContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -6978,22 +6156,8 @@ const Renderer = {
   clearEntrySlots() {
     const slotTypes = ['tone', 'subject', 'action', 'object', 'context'];
     slotTypes.forEach(slot => {
-      // Clear via updateSlot
       this.updateSlot(slot, null);
-
-      // Also directly clear DOM as fallback
-      const slotEl = document.getElementById(`slot-${slot}`);
-      if (slotEl) {
-        slotEl.textContent = '';
-        const container = slotEl.closest('.entry-slot');
-        if (container) {
-          container.classList.remove('filled');
-        }
-      }
     });
-
-    // Force update the preview
-    this.updateEntryPreview();
   },
 
   // Update entry preview
@@ -8991,152 +8155,6 @@ const WeekTransition = {
     if (tensionContainer) tensionContainer.classList.remove('visible');
   }
 };
-
-// Export for module use
-;
-}
-
-
-// === src/js/ui/firelight.js ===
-// Fire Flicker System for The Lighthouse Keeper
-// The only fluid animation - fire is alive, everything else is record
-
-const FirelightSystem = {
-  isRunning: false,
-  elements: [],
-  lampElement: null,
-  lastFlicker: 0,
-  baseIntensity: 1.0,
-
-  // Initialize the firelight system
-  init() {
-    this.lampElement = document.querySelector('.lighthouse-icon');
-    this.elements = document.querySelectorAll('[data-light-source]');
-
-    // Start the flicker loop
-    this.isRunning = true;
-    this.flickerLoop();
-
-    console.log('FirelightSystem initialized');
-  },
-
-  // Main flicker loop - runs constantly
-  flickerLoop() {
-    if (!this.isRunning) return;
-
-    const now = performance.now();
-
-    // Subtle constant flicker (every frame)
-    this.applySubtleFlicker();
-
-    // Occasional larger flicker (random)
-    if (Math.random() < 0.02) {
-      this.applyLargeFlicker();
-    }
-
-    // Very rare dramatic flicker
-    if (Math.random() < 0.003) {
-      this.applyDramaticFlicker();
-    }
-
-    requestAnimationFrame(() => this.flickerLoop());
-  },
-
-  // Subtle constant variation
-  applySubtleFlicker() {
-    const variance = 0.03;
-    const flicker = this.baseIntensity + (Math.random() - 0.5) * variance;
-
-    if (this.lampElement) {
-      this.lampElement.style.setProperty('--lamp-intensity', flicker);
-      this.lampElement.style.filter = `brightness(${flicker})`;
-    }
-
-    // Apply to any elements with the lighthouse beam
-    const beam = document.getElementById('lighthouse-beam');
-    if (beam) {
-      beam.style.opacity = 0.85 + (Math.random() * 0.1);
-    }
-  },
-
-  // Occasional larger flicker
-  applyLargeFlicker() {
-    const dip = 0.85 + Math.random() * 0.1;
-
-    if (this.lampElement) {
-      this.lampElement.style.filter = `brightness(${dip})`;
-
-      // Recover after brief moment
-      setTimeout(() => {
-        if (this.lampElement) {
-          this.lampElement.style.filter = `brightness(${this.baseIntensity})`;
-        }
-      }, 50 + Math.random() * 100);
-    }
-  },
-
-  // Dramatic flicker (rare)
-  applyDramaticFlicker() {
-    const sequence = [0.7, 0.9, 0.75, 0.95, 1.0];
-    let i = 0;
-
-    const flash = () => {
-      if (i >= sequence.length) return;
-
-      if (this.lampElement) {
-        this.lampElement.style.filter = `brightness(${sequence[i]})`;
-      }
-
-      const beam = document.getElementById('lighthouse-beam');
-      if (beam) {
-        beam.style.opacity = sequence[i] * 0.9;
-      }
-
-      i++;
-      setTimeout(flash, 30 + Math.random() * 40);
-    };
-
-    flash();
-  },
-
-  // Set base intensity (for tension effects)
-  setIntensity(intensity) {
-    this.baseIntensity = Math.max(0.5, Math.min(1.2, intensity));
-  },
-
-  // Pause the flicker (for cutscenes, etc.)
-  pause() {
-    this.isRunning = false;
-  },
-
-  // Resume flicker
-  resume() {
-    if (!this.isRunning) {
-      this.isRunning = true;
-      this.flickerLoop();
-    }
-  },
-
-  // Storm mode - more dramatic flickering
-  setStormMode(enabled) {
-    if (enabled) {
-      this.baseIntensity = 0.85;
-      // Increase flicker frequency via CSS
-      document.body.classList.add('storm-light');
-    } else {
-      this.baseIntensity = 1.0;
-      document.body.classList.remove('storm-light');
-    }
-  }
-};
-
-// Auto-initialize when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => FirelightSystem.init());
-} else {
-  // Small delay to ensure other elements are ready
-  setTimeout(() => FirelightSystem.init(), 100);
-}
 
 // Export for module use
 ;
