@@ -83,18 +83,31 @@ const Game = {
 
   // Start a new game
   startNewGame() {
+    // Hide start screen
+    document.getElementById('start-screen').style.display = 'none';
+
+    // Play intro sequence
+    IntroSequence.play(() => {
+      // After intro, start the game
+      this.actuallyStartNewGame();
+    });
+  },
+
+  // Actually start the new game (after intro)
+  actuallyStartNewGame() {
     // Clear any existing save
     StateManager.clearSave();
 
     // Reset state
     StateManager.reset();
 
-    // Hide start screen, show game
-    document.getElementById('start-screen').style.display = 'none';
+    // Show game container
     document.getElementById('game-container').style.display = 'grid';
 
-    // Initialize audio on first user interaction
-    AudioEngine.init();
+    // Initialize audio on first user interaction (if not already by intro)
+    if (!AudioEngine.initialized) {
+      AudioEngine.init();
+    }
 
     // Start Week 1
     this.startWeek(1);
@@ -103,15 +116,30 @@ const Game = {
   // Continue saved game
   continueGame() {
     if (StateManager.load()) {
+      // Hide start screen
       document.getElementById('start-screen').style.display = 'none';
-      document.getElementById('game-container').style.display = 'grid';
 
-      AudioEngine.init();
-
-      // Restore game state
-      const state = StateManager.getState();
-      this.startWeek(state.week, false); // Don't show transition
+      // Play intro sequence
+      IntroSequence.play(() => {
+        // After intro, continue the game
+        this.actuallyContinueGame();
+      });
     }
+  },
+
+  // Actually continue the game (after intro)
+  actuallyContinueGame() {
+    // Show game container
+    document.getElementById('game-container').style.display = 'grid';
+
+    // Initialize audio (if not already by intro)
+    if (!AudioEngine.initialized) {
+      AudioEngine.init();
+    }
+
+    // Restore game state
+    const state = StateManager.getState();
+    this.startWeek(state.week, false); // Don't show transition
   },
 
   // Start a specific week
