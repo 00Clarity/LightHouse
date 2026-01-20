@@ -88,8 +88,11 @@ const Renderer = {
   },
 
   // Render villager list
-  renderVillagers(villagers, involvedIds = [], completedActions = new Set()) {
+  renderVillagers(villagers, involvedIds = [], completedActions) {
     if (!this.elements.villagerList) return;
+
+    // Ensure completedActions is a Set
+    const actions = completedActions instanceof Set ? completedActions : new Set();
 
     const villagerIds = ['marta', 'peter', 'anna', 'tomas', 'lucia', 'simao', 'bela', 'jakub', 'helena'];
 
@@ -99,8 +102,8 @@ const Renderer = {
       if (!villager || !stats) return '';
 
       const isInvolved = involvedIds.includes(id);
-      const hasSpoken = completedActions.has(`talk_${id}_${GameState.week}`) ||
-                        completedActions.has(`final_${id}`);
+      const hasSpoken = actions.has(`talk_${id}_${GameState.week}`) ||
+                        actions.has(`final_${id}`);
 
       const wellbeingPercent = stats.wellbeing;
       const trustPercent = stats.trust;
@@ -167,25 +170,35 @@ const Renderer = {
 
   // Render event and investigation options
   renderEvent(event, timeRemaining, completedActions) {
-    if (!event) return;
+    if (!event) {
+      console.warn('renderEvent: No event provided');
+      return;
+    }
 
-    if (this.elements.eventTitle) {
+    if (this.elements.eventTitle && event.title) {
       this.elements.eventTitle.textContent = event.title;
     }
 
-    if (this.elements.eventDescription) {
-      this.elements.eventDescription.innerHTML = event.description.split('\n\n').map(p => `<p>${p}</p>`).join('');
+    if (this.elements.eventDescription && event.description) {
+      const desc = typeof event.description === 'string' ? event.description : '';
+      this.elements.eventDescription.innerHTML = desc.split('\n\n').map(p => `<p>${p}</p>`).join('');
     }
 
-    this.renderActions(event.actions, timeRemaining, completedActions);
+    if (event.actions) {
+      this.renderActions(event.actions, timeRemaining, completedActions);
+    }
   },
 
   // Render investigation action cards
   renderActions(actions, timeRemaining, completedActions) {
     if (!this.elements.actionGrid) return;
+    if (!actions || !Array.isArray(actions)) return;
+
+    // Ensure completedActions is a Set
+    const completed = completedActions instanceof Set ? completedActions : new Set();
 
     this.elements.actionGrid.innerHTML = actions.map(action => {
-      const isCompleted = completedActions.has(action.id);
+      const isCompleted = completed.has(action.id);
       const canAfford = action.cost <= timeRemaining;
       const isDisabled = isCompleted || !canAfford;
 
@@ -265,6 +278,10 @@ const Renderer = {
   // Render fragment tray
   renderFragments(fragments, usedFragments) {
     if (!this.elements.fragmentList) return;
+    if (!fragments || !Array.isArray(fragments)) return;
+
+    // Ensure usedFragments is a Set
+    const used = usedFragments instanceof Set ? usedFragments : new Set();
 
     // Group fragments by type
     const grouped = {
@@ -285,7 +302,7 @@ const Renderer = {
     let html = '';
     Object.keys(grouped).forEach(type => {
       grouped[type].forEach(frag => {
-        const isUsed = usedFragments.has(frag.id);
+        const isUsed = used.has(frag.id);
         html += `
           <div class="fragment ${isUsed ? 'used' : ''}"
                data-fragment-id="${frag.id}"

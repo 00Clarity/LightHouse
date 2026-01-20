@@ -139,31 +139,46 @@ const Game = {
 
   // Render current week's content
   renderWeek() {
-    const state = StateManager.getState();
+    try {
+      console.log('renderWeek: Starting...');
+      const state = StateManager.getState();
+      console.log('renderWeek: Got state', { week: state.week, hasEvent: !!this.currentEvent });
 
-    // Update header
-    Renderer.updateHeader(state);
+      // Update header
+      Renderer.updateHeader(state);
 
-    // Update tension
-    Renderer.updateTension(state.story.tension);
+      // Update tension
+      Renderer.updateTension(state.story.tension);
 
-    // Render villagers
-    const involvedIds = this.currentEvent ? this.currentEvent.involvedVillagers : [];
-    Renderer.renderVillagers(state.villagers, involvedIds, state.current.completedActions);
+      // Render villagers
+      const involvedIds = this.currentEvent ? this.currentEvent.involvedVillagers : [];
+      console.log('renderWeek: Rendering villagers', { involvedIds });
+      Renderer.renderVillagers(state.villagers, involvedIds, state.current.completedActions);
 
-    // Render event
-    Renderer.renderEvent(this.currentEvent, state.timeRemaining, state.current.completedActions);
+      // Render event
+      console.log('renderWeek: Rendering event', {
+        hasEvent: !!this.currentEvent,
+        title: this.currentEvent?.title,
+        hasActions: !!this.currentEvent?.actions,
+        actionsCount: this.currentEvent?.actions?.length
+      });
+      Renderer.renderEvent(this.currentEvent, state.timeRemaining, state.current.completedActions);
 
-    // Hide testimony
-    Renderer.hideTestimony();
+      // Hide testimony
+      Renderer.hideTestimony();
 
-    // Load available fragments
-    const fragments = getAvailableFragments(state.week, state.story);
-    state.current.fragments = fragments;
-    Renderer.renderFragments(fragments, state.current.usedFragments);
+      // Load available fragments
+      const fragments = getAvailableFragments(state.week, state.story);
+      console.log('renderWeek: Got fragments', { count: fragments?.length });
+      state.current.fragments = fragments;
+      Renderer.renderFragments(fragments, state.current.usedFragments);
 
-    // Update entry preview
-    Renderer.updateEntryPreview();
+      // Update entry preview
+      Renderer.updateEntryPreview();
+      console.log('renderWeek: Complete');
+    } catch (error) {
+      console.error('renderWeek ERROR:', error);
+    }
   },
 
   // Refresh villager display
